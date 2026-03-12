@@ -9,9 +9,9 @@ TEXT_WHITE = "#ffffff"
 TEXT_BLACK = "#000000"
 to_learn = {}
 try:
-    data = pd.read_csv("data/words_to_learn.csv")
+    data = pd.read_csv("words_to_learn.csv")
 except FileNotFoundError:
-    original_data = pd.read_csv("data/french_words.csv")
+    original_data = pd.read_csv("french_words.csv")
     to_learn = original_data.to_dict(orient="records")
 else:
     to_learn = data.to_dict(orient="records")
@@ -35,7 +35,7 @@ def answer_card():
 def is_known():
     to_learn.remove(current_card)
     data = pandas.DataFrame(to_learn)
-    data.to_csv("data/words_to_learn.csv",index=False)
+    data.to_csv("words_to_learn.csv",index=False)
 
     next_card()
 
@@ -45,19 +45,19 @@ window.config(pady=50,padx=50,bg=BACKGROUND_COLOR)
 window.minsize(height=576,width=850)
 
 canvas = Canvas(width=800,height=526,bg=BACKGROUND_COLOR,highlightthickness=0)
-front_card_image = PhotoImage(file="images/card_front.png")
-back_card_image = PhotoImage(file="images/card_back.png")
+front_card_image = PhotoImage(file="card_front.png")
+back_card_image = PhotoImage(file="card_back.png")
 flash_card = canvas.create_image(400,263,image = front_card_image)
 canvas.grid(row=0,column=1,columnspan=2)
 card_title = canvas.create_text(400,150,text="",font=("Ariel",40))
 card_word = canvas.create_text(400,300,text="",font=("Ariel",60,"bold"))
 
-cross_image = PhotoImage(file="images/wrong.png")
+cross_image = PhotoImage(file="wrong.png")
 unknown_button = Button(image=cross_image,command=next_card)
 unknown_button.config(highlightthickness=0)
 unknown_button.grid(row=1,column=1)
 
-right_image = PhotoImage(file="images/right.png")
+right_image = PhotoImage(file="right.png")
 known_button = Button(image=right_image,command=is_known)
 known_button.config(highlightthickness=0)
 known_button.grid(row=1,column=2)
